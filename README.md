@@ -1,0 +1,1 @@
+# integrata-design-pattern-september-2026
