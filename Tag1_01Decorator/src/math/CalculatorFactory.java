@@ -1,6 +1,7 @@
 package math;
 
 import client.CalcClient;
+import shared.LoggerProxy;
 
 public class CalculatorFactory {
 
@@ -26,7 +27,8 @@ public class CalculatorFactory {
     public static Calculator createCalculator() {
         Calculator result =  new CalculatorImpl();
         if(logger) {
-            result = new CalculatorLogger(result);
+            //result = new CalculatorLogger(result);
+            result = (Calculator) LoggerProxy.newInstance(result);
         }
         if(secure) {
             result = new CalculatorSecure(result);
