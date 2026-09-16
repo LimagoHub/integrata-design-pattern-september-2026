@@ -23,9 +23,11 @@ public class Firma {
     }
 
     public void iterate(MitarbeiterVisitor visitor) {
+        visitor.init();
         for (AbstractMitarbeiter mitarbeiter : mitarbeiters) {
             //visitor.visit(mitarbeiter);
             mitarbeiter.accept(visitor);
         }
+        visitor.dispose();
     }
 }
