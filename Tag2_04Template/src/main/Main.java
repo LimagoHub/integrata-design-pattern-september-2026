@@ -1,14 +1,19 @@
 package main;
 
-import processor.AbstractFileProcessor;
+
 import processor.CharacterCounter;
+import processor.FileCopy;
+import processor.FileProcessor;
 import processor.LineCounter;
 
 
 public class Main {
 
     public static void main(String[] args) {
-        AbstractFileProcessor processor = new LineCounter();
+        FileProcessor processor = new FileProcessor();
+        processor.addCharacterHandler(new CharacterCounter());
+        processor.addCharacterHandler(new LineCounter());
+        processor.addCharacterHandler(new FileCopy());
         processor.run("./src/resources/eingabe.txt");
     }
 }

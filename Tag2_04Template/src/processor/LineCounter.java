@@ -1,6 +1,6 @@
 package processor;
 
-public class LineCounter extends AbstractFileProcessor{
+public class LineCounter implements CharacterHandler {
     private int counter;
 
     @Override
