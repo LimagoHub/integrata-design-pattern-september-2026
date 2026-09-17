@@ -18,7 +18,7 @@ public class Calculator {
         return memory;
     }
 
-    public void setMemory(final double memory) {
+    private void setMemory(final double memory) {
         this.memory = memory;
     }
 
