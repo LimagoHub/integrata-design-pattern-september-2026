@@ -43,4 +43,24 @@ public class Calculator {
         System.out.println(memory);
     }
 
+    public CalculatorMemento getMemento() {
+        return new MyCalculatorMemento(memory);
+    }
+
+    public void setMemento(final CalculatorMemento memento) {
+        setMemory(((MyCalculatorMemento) memento).getMemory());
+    }
+
+    private static class MyCalculatorMemento implements CalculatorMemento {
+        private final double memory;
+
+        public MyCalculatorMemento(final double memory) {
+            this.memory = memory;
+        }
+
+        public double getMemory() {
+            return memory;
+        }
+    }
+
 }

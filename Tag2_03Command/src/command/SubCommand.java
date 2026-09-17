@@ -2,7 +2,7 @@ package command;
 
 import math.Calculator;
 
-public class AddCommand extends AbstractTransactionCommand {
+public class SubCommand implements Command {
 
     private double value;
     @Override
@@ -10,9 +10,18 @@ public class AddCommand extends AbstractTransactionCommand {
         value = Double.parseDouble(tokens[1]);
     }
 
+    @Override
+    public void execute() {
+        Calculator.getInstance().sub(value);
+    }
 
     @Override
-    protected void doAction() {
+    public void undo() {
         Calculator.getInstance().add(value);
+    }
+
+    @Override
+    public boolean isQuery() {
+        return false;
     }
 }

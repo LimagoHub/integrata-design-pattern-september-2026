@@ -2,22 +2,12 @@ package command;
 
 import math.Calculator;
 
-public class ClearCommand extends AbstractCommand{
-    private double oldVaue;
+
+public class ClearCommand extends AbstractTransactionCommand{
+
 
     @Override
-    public void execute() {
-        this.oldVaue = Calculator.getInstance().getMemory();
+    protected void doAction() {
         Calculator.getInstance().clear();
-    }
-
-    @Override
-    public void undo() {
-       Calculator.getInstance().setMemory(oldVaue);
-    }
-
-    @Override
-    public boolean isQuery() {
-        return false;
     }
 }
