@@ -1,12 +1,15 @@
 package de.integrata.tiere;
 
+import de.integrata.propertychangedevent.PropertyChangedEvent;
+import de.integrata.propertychangedevent.PropertyChangedListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Schwein extends Tier {
 
     private List<PigTooFatListener> pigTooFatListeners  = new ArrayList<>();
-
+    private List<PropertyChangedListener> propertyChangedListeners  = new ArrayList<>();
 
     public void addPigTooFatListener(PigTooFatListener listener) {
         pigTooFatListeners.add(listener);
@@ -14,6 +17,25 @@ public class Schwein extends Tier {
     public void removePigTooFatListener(PigTooFatListener listener) {
         pigTooFatListeners.remove(listener);
     }
+
+    public void addPropertyChangedListener(PropertyChangedListener listener) {
+        propertyChangedListeners.add(listener);
+    }
+
+    public void removePropertyChangedListener(PropertyChangedListener listener) {
+        propertyChangedListeners.remove(listener);
+    }
+
+    private void notifyPropertyChangedListeners(PropertyChangedEvent event) {
+        for (PropertyChangedListener listener : propertyChangedListeners) {
+            listener.propertyChanged(event);
+        }
+    }
+
+    private void notifyPropertyChangedListeners(String name, Object oldValue, Object newValue) {
+        notifyPropertyChangedListeners(new PropertyChangedEvent(this, name, oldValue, newValue));
+    }
+
 
     private void firePigTooFatEveent(){
         pigTooFatListeners.forEach(listener -> listener.pigTooFat(this));
@@ -37,7 +59,8 @@ public class Schwein extends Tier {
     }
 
     public void setName(final String name) {
-        this.name = name;
+        if(this.name.equals(name)) return;
+        notifyPropertyChangedListeners("name", this.name, this.name=name);
     }
 
     public int getGewicht() {
@@ -45,7 +68,8 @@ public class Schwein extends Tier {
     }
 
     private void setGewicht(final int gewicht) {
-        this.gewicht = gewicht;
+        if(this.gewicht == gewicht) return;
+        notifyPropertyChangedListeners("gewicht", this.gewicht, this.gewicht=gewicht);
         if(this.gewicht > 20) firePigTooFatEveent();
     }
 
