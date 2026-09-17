@@ -1,24 +1,20 @@
 package command;
 
 public class CommandFactory {
+    private static final String PREFIX = "command.";
+    private static final String SUFFIX = "Command";
 
     public static Command createCommand(String zeile) {
-        Command command = null;
-        String [] tokens = zeile.split(" ");
-
-        switch (tokens[0]) {
-            case "Add" -> {
-                command = new AddCommand();
-                command.parse(tokens);
-            }
-            case "Print" -> {
-                command = new Print();
-                command.parse(tokens);
-            }
-            default -> System.out.println("Invalid command");
+        try {
+            String [] tokens = zeile.split(" ");
+            Command command = (Command) Class.forName(PREFIX + tokens[0] + SUFFIX).getConstructor().newInstance();
+            command.parse(tokens);
+            return command;
         }
 
-
-        return command;
+        catch (Throwable e) {
+            System.out.println("Invalid Command: " + e.getMessage());
+            return null;
+        }
     }
 }
