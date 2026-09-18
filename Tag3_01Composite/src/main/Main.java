@@ -28,7 +28,7 @@ public class Main {
         Leaf e2_4 = new Leaf("e2_4");
         e1_2.appendChild(e2_4);
 
-        
+
 
         traverse(root);
     }

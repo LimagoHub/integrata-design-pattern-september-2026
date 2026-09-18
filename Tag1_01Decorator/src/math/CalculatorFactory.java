@@ -1,36 +1,33 @@
 package math;
 
-import client.CalcClient;
 import shared.LoggerProxy;
 
 public class CalculatorFactory {
 
-    private static boolean logger = false;
-    private static boolean secure = false;
+    private boolean logger = false;
+    private boolean secure = false;
 
-    public static boolean isLogger() {
-        return logger;
+    public static CalculatorFactory builder() {
+        return new CalculatorFactory();
     }
 
-    public static void setLogger(final boolean logger) {
-        CalculatorFactory.logger = logger;
+    public CalculatorFactory withLogger() {
+        this.logger = true;
+        return this;
     }
 
-    public static boolean isSecure() {
-        return secure;
+    public CalculatorFactory withSecure() {
+        this.secure = true;
+        return this;
     }
 
-    public static void setSecure(final boolean secure) {
-        CalculatorFactory.secure = secure;
-    }
-
-    public static Calculator createCalculator() {
-        Calculator result =  new CalculatorImpl();
-        if(logger) {
+    public Calculator build() {
+        Calculator result = new CalculatorImpl();
+        if (logger) {
             //result = new CalculatorLogger(result);
             result = (Calculator) LoggerProxy.newInstance(result);
         }
-        if(secure) {
+        if (secure) {
             result = new CalculatorSecure(result);
         }
         return result;

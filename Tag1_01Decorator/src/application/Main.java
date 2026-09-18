@@ -8,8 +8,10 @@ public class Main {
     public static void main(String[] args) {
 
 
-        CalculatorFactory.setLogger(true);
-        Calculator calc = CalculatorFactory.createCalculator();
+        Calculator calc = CalculatorFactory.builder()
+                .withLogger()
+                .withSecure()
+                .build();
 
         CalcClient calcClient = new CalcClient(calc);
         calcClient.go();
